@@ -61,8 +61,8 @@ bool RC522Reader::readCard() {
     return true;
 }
 
-void RC522Reader::printCardData() const {
-    if (!_cardData.valid) {
+void RC522Reader::printCardData(RC522Reader::CardData* data) {
+    if (! data->valid) {
         Serial.println("Keine gueltige Karte vorhanden.");
         return;
     }
@@ -70,18 +70,18 @@ void RC522Reader::printCardData() const {
     Serial.println("=== Karte erkannt ===");
 
     Serial.print("Typ: ");
-    Serial.println(_rfid.PICC_GetTypeName(_cardData.piccType));
+    Serial.println(_rfid.PICC_GetTypeName(data->piccType));
 
     Serial.print("UID (HEX): ");
-    printHex((byte*)_cardData.uid, _cardData.uidSize);
+    printHex((byte*)data->uid, data->uidSize);
     Serial.println();
 
     Serial.print("UID (DEC): ");
-    printDec((byte*)_cardData.uid, _cardData.uidSize);
+    printDec((byte*)data->uid, data->uidSize);
     Serial.println();
 
     Serial.print("UID-Laenge: ");
-    Serial.print(_cardData.uidSize);
+    Serial.print(data->uidSize);
     Serial.println(" Byte");
     Serial.println();
 }

@@ -24,7 +24,7 @@ class RC522Reader {
         void powerOn();
         void powerOff();
         bool readCard();
-        void printCardData() const;
+        void printCardData(RC522Reader::CardData* data);
         void endCommunication();
         void hardSleep();
         void hardWake();
