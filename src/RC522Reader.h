@@ -17,12 +17,10 @@ class RC522Reader {
         };
 
         //========== Konstruktor ==========//
-        RC522Reader(byte RC522_SS_PIN, byte RC522_RST_PIN, byte RC522_SCK_PIN, byte RC522_MISO_PIN, byte RC522_MOSI_PIN, byte GATE_PIN);
+        RC522Reader(byte RC522_SS_PIN, byte RC522_RST_PIN, byte RC522_SCK_PIN, byte RC522_MISO_PIN, byte RC522_MOSI_PIN);
 
         //========== Public-Funktionsdeklarationen ==========//
         void begin();
-        void powerOn();
-        void powerOff();
         bool readCard();
         void printCardData(RC522Reader::CardData* data);
         void endCommunication();
@@ -38,7 +36,7 @@ class RC522Reader {
         const byte _RC522_SCK_PIN;
         const byte _RC522_MISO_PIN;
         const byte _RC522_MOSI_PIN;
-        const byte _GATE_PIN;
+
 
         MFRC522 _rfid;
         CardData _cardData;

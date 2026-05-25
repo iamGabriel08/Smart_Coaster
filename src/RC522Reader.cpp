@@ -1,40 +1,28 @@
 #include "RC522Reader.h"
 
 //========== Konstruktor ==========//
-RC522Reader::RC522Reader(byte RC522_SS_PIN, byte RC522_RST_PIN, byte RC522_SCK_PIN, byte RC522_MISO_PIN, byte RC522_MOSI_PIN, byte GATE_PIN)
+RC522Reader::RC522Reader(byte RC522_SS_PIN, byte RC522_RST_PIN, byte RC522_SCK_PIN, byte RC522_MISO_PIN, byte RC522_MOSI_PIN)
 : _RC522_SS_PIN(RC522_SS_PIN),
   _RC522_RST_PIN(RC522_RST_PIN),
   _RC522_SCK_PIN(RC522_SCK_PIN),
   _RC522_MISO_PIN(RC522_MISO_PIN),
   _RC522_MOSI_PIN(RC522_MOSI_PIN),
-  _GATE_PIN(GATE_PIN),
   _rfid(RC522_SS_PIN, RC522_RST_PIN),
   _cardData{{0}, 0, MFRC522::PICC_TYPE_UNKNOWN, false}
   { }
 
 //========== Public-Funktionsimplementierungen ==========//
 void RC522Reader::begin() {
-    pinMode(_GATE_PIN, OUTPUT);
-    powerOn();
     delay(1000);
 
     SPI.begin(_RC522_SCK_PIN, _RC522_MISO_PIN, _RC522_MOSI_PIN, _RC522_SS_PIN);
     _rfid.PCD_Init();
-
     delay(50);
 
     Serial.println();
     Serial.println("RC522 initialisiert.");
     Serial.println("Halte einen RFID-Tag an den Leser...");
     Serial.println();
-}
-
-void RC522Reader::powerOn() {
-    digitalWrite(_GATE_PIN, HIGH);
-}
-
-void RC522Reader::powerOff() {
-    digitalWrite(_GATE_PIN, LOW);
 }
 
 bool RC522Reader::readCard() {
